@@ -143,7 +143,7 @@ public class ServiceDAO implements CustomConnection, FactoryCRUD<ServiceEntity> 
 
         try {
             conn = getConnection();
-            stmt = conn.prepareStatement(FIND_ALL_QUERY);
+            stmt = conn.prepareStatement(GET_SERVICE_BY_NAME_QUERY);
 
             ResultSet rs = stmt.executeQuery();
 
