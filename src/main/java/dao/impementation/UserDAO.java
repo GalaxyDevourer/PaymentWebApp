@@ -17,7 +17,7 @@ public class UserDAO implements CustomConnection, FactoryCRUD <UserEntity> {
     private final String INSERT_QUERY = "INSERT INTO users (login, password," +
             " role) VALUES(?,?,?)";
 
-    private final String DELETE_QUERY = "DELETE FROM user WHERE login=?";
+    private final String DELETE_QUERY = "DELETE FROM users WHERE login=?";
 
     private final String GET_USER_BY_LOGIN_QUERY = "SELECT * FROM users WHERE login=?";
 
