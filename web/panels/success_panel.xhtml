@@ -7,11 +7,12 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
     <h:head>
-        <title>Admin panel</title>
+        <title>Login Success</title>
     </h:head>
 
     <h:body>
-
+        <h:outputLabel value="#{successLogin.message}"/> <br/>
+        <h:commandButton value="Go to panel" action="#{successLogin.goToPanels()}" />
     </h:body>
 </f:view>
 </html>

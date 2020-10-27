@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/sign_in_panel")
@@ -27,12 +28,22 @@ public class SignInPanel extends HttpServlet {
             String password = req.getParameter("password");
 
             Registration reg = new Registration();
-            UserEntity user = reg.userSignIn(login, password);
+            String role = reg.userSignIn(login, password);
 
-            if (user != null) {
+            if (!role.equals("")) {
+                HttpSession session = req.getSession();
+                session.setMaxInactiveInterval(10 * 60);
 
+                session.setAttribute("role", role);
+
+                req.setAttribute("message", "Successful login, press the button to go to the control panel!");
+                req.getRequestDispatcher("/panels/success_panel.xhtml").forward(req, resp);
             }
-            //else
+            else {
+                req.setAttribute("message", "Login denied, please enter correct data!");
+                req.getRequestDispatcher("/panels/denied_panel.xhtml").forward(req, resp);
+            }
+
         }
         //else {
         //    RequestDispatcher dispatcher = req.getRequestDispatcher("/unauthorized/registration_panel.html");

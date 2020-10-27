@@ -3,19 +3,19 @@ package models;
 import dao.impementation.UserDAO;
 import entities.UserEntity;
 
-import javax.enterprise.context.RequestScoped;
-
-@RequestScoped
 public class Registration {
     private UserDAO userDAO = new UserDAO();
 
-    public UserEntity userSignIn (String login, String password) {
+    public String userSignIn (String login, String password) {
         UserEntity user = userDAO.getUserByLogin(login);
 
-        if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
-            return user;
+        if (user != null) {
+            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
+                return user.getRole();
+            }
         }
-        else return null;
+
+        return "";
     }
 
     public int userRegistration(String login, String password) {

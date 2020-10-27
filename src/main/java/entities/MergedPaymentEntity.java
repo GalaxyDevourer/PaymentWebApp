@@ -11,7 +11,7 @@ public class MergedPaymentEntity {
     private Date date;
     private float payment;
 
-    MergedPaymentEntity () {}
+    public MergedPaymentEntity() {}
 
     public MergedPaymentEntity(String name, String surname, String city, String servicename, float monthamount, Date date, float payment) {
         this.name = name;
