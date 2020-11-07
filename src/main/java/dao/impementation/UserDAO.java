@@ -17,7 +17,7 @@ public class UserDAO implements CustomConnection, FactoryCRUD <UserEntity> {
     private final String INSERT_QUERY = "INSERT INTO users (login, password," +
             " role) VALUES(?,?,?)";
 
-    private final String DELETE_QUERY = "DELETE FROM users WHERE login=?";
+    private final String DELETE_QUERY = "DELETE FROM users WHERE id=?";
 
     private final String GET_USER_BY_LOGIN_QUERY = "SELECT * FROM users WHERE login=?";
 
@@ -90,14 +90,14 @@ public class UserDAO implements CustomConnection, FactoryCRUD <UserEntity> {
     }
 
     @Override
-    public boolean delete(UserEntity user) {
+    public boolean delete(Integer id) {
         Connection conn = null;
         PreparedStatement stmt = null;
 
         try {
             conn = getConnection();
             stmt = conn.prepareStatement(DELETE_QUERY);
-            stmt.setString(1, user.getLogin());
+            stmt.setInt(1, id);
 
             stmt.executeUpdate();
 

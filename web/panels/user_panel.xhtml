@@ -4,14 +4,91 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:crud.user="http://java.sun.com/jsf/composite/crud/user">
+
 <f:view>
     <h:head>
         <title>User panel</title>
+        <head>
+            <style type="text/css">
+                .center {
+                    display: flex;
+                    justify-content: center;
+                }
+            </style>
+        </head>
     </h:head>
 
     <h:body style="position: absolute; margin-left: auto; margin-right: auto; left: 0; right: 0; text-align: center;">
-        <h:outputLabel value="Welcome, #{userPanel.login} [ #{userPanel.role} ]" />
+        <h:form>
+            <h:outputLabel value="Welcome, #{userPanel.login} [#{userPanel.role}]" /><br/>
+            <h:outputLabel value="Do you want log off from your account? Press the botton " />
+            <h:commandButton action = "#{logOutBean.logOut}" value = "Log Out"/>
+        </h:form> <br/>
+        <h:outputLabel value="There you can find information about clients!" /> <br/>
+        <h:outputLabel value="You can only browse it, but can not edit." /> <br/><br/>
+
+        <crud.user:email/>
+
+        <crud.user:selectMergedTable
+                clientIDValue="#{selectMergedTableBean.clientID}"
+                cityValue="#{selectMergedTableBean.city}"
+                serviceNameValue="#{selectMergedTableBean.serviceName}"
+        />
+
+        <h:outputText value = "Clients informations"/><b/>
+
+        <h:form >
+            <h:outputLabel> ID Client: </h:outputLabel>
+            <h:inputText value="#{selectMergedTableBean.clientID}"/>
+            <h:outputLabel> City: </h:outputLabel>
+            <h:inputText value="#{selectMergedTableBean.city}"/>
+            <h:outputLabel> Service: </h:outputLabel>
+            <h:inputText value="#{selectMergedTableBean.serviceName}"/>
+
+            <h:commandButton action = "#{selectMergedTableBean.refreshTable}"
+                             value = "Browse"/>
+        </h:form> <br/>
+
+        <div class="center">
+            <div class="wrapper">
+                <h:form style="margin-left: auto">
+                    <h:dataTable value="#{selectMergedTableBean.customMergedTable}" var="table"
+                                 border="2" cellspacing="1" cellpadding="1" >
+                        <h:column>
+                            <f:facet name="header">Name</f:facet>
+                            <h:outputText value="#{table.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Surname</f:facet>
+                            <h:outputText value="#{table.surname}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">City</f:facet>
+                            <h:outputText value="#{table.city}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Servicename</f:facet>
+                            <h:outputText value="#{table.servicename}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Monthlyamount</f:facet>
+                            <h:outputText value="#{table.monthamount}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Date</f:facet>
+                            <h:outputText value="#{table.date}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Payment</f:facet>
+                            <h:outputText value="#{table.payment}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+            </div>
+        </div>
+
     </h:body>
 </f:view>
 </html>

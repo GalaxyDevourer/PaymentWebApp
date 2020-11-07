@@ -18,7 +18,7 @@ public class ServiceDAO implements CustomConnection, FactoryCRUD<ServiceEntity> 
     private final String INSERT_QUERY = "INSERT INTO service (servicename, amount," +
             " worth) VALUES(?,?,?)";
 
-    private final String DELETE_QUERY = "DELETE FROM service WHERE servicename=?";
+    private final String DELETE_QUERY = "DELETE FROM service WHERE id=?";
 
     private final String GET_SERVICE_BY_NAME_QUERY = "SELECT * FROM service WHERE servicename=?";
 
@@ -37,6 +37,7 @@ public class ServiceDAO implements CustomConnection, FactoryCRUD<ServiceEntity> 
             while (rs.next()) {
                 ServiceEntity service = new ServiceEntity();
 
+                service.setId(rs.getInt("id"));
                 service.setServicename(rs.getString("servicename"));
                 service.setAmount(rs.getString("amount"));
                 service.setWorth(rs.getString("worth"));
@@ -113,14 +114,14 @@ public class ServiceDAO implements CustomConnection, FactoryCRUD<ServiceEntity> 
     }
 
     @Override
-    public boolean delete(ServiceEntity service) {
+    public boolean delete(Integer id) {
         Connection conn = null;
         PreparedStatement stmt = null;
 
         try {
             conn = getConnection();
             stmt = conn.prepareStatement(DELETE_QUERY);
-            stmt.setString(1, service.getServicename());
+            stmt.setInt(1, id);
 
             stmt.executeUpdate();
 

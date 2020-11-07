@@ -5,10 +5,7 @@ import dao.interfaces.FactoryCRUD;
 import entities.MergedPaymentEntity;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,16 +17,11 @@ public class MergedPaymentEntityDAO implements CustomConnection, FactoryCRUD<Mer
             "FROM paymentservice.payment p\n" +
             "  INNER JOIN paymentservice.clientservice cs ON p.idclientservice = cs.id\n" +
             "  INNER JOIN paymentservice.client c ON cs.idclient = c.id\n" +
-            "  INNER JOIN paymentservice.service s ON cs.idservice = s.id;";
+            "  INNER JOIN paymentservice.service s ON cs.idservice = s.id\n";
 
-    private final String FIND_ALL_BY_ID_QUERY =
-            "SELECT paymentservice.c.name, paymentservice.c.surname, paymentservice.c.city, paymentservice.s.servicename, \n" +
-            "       paymentservice.cs.monthlyamount, paymentservice.cs.date, paymentservice.p.payment\n" +
-            "FROM paymentservice.payment p\n" +
-            "  INNER JOIN paymentservice.clientservice cs ON p.idclientservice = cs.id\n" +
-            "  INNER JOIN paymentservice.client c ON cs.idclient = c.id\n" +
-            "  INNER JOIN paymentservice.service s ON cs.idservice = s.id\n" +
-            "WHERE cs.idclient = ?;";
+    private final String BY_CLIENT_ID = "WHERE cs.idclient = ?;";
+    private final String BY_CITY = "WHERE c.city = ?;";
+    private final String BY_SERVICE_NAME = "WHERE s.servicename = ?;";
 
     @Override
     public List<MergedPaymentEntity> getAll() {
@@ -82,19 +74,31 @@ public class MergedPaymentEntityDAO implements CustomConnection, FactoryCRUD<Mer
 
     @Override
     @Deprecated
-    public boolean delete(MergedPaymentEntity obj) {
+    public boolean delete(Integer id) {
         return false;
     }
 
-    public List<MergedPaymentEntity> getAllByUserId (int id) {
+    public List<MergedPaymentEntity> getCustomData (Integer clientID, String city, String serviceName) {
         Connection conn = null;
         PreparedStatement stmt = null;
         List<MergedPaymentEntity> list = new ArrayList<>();
 
         try {
             conn = getConnection();
-            stmt = conn.prepareStatement(FIND_ALL_BY_ID_QUERY);
-            stmt.setInt(1, id);
+
+            if (clientID != null) {
+                stmt = conn.prepareStatement(FIND_ALL_QUERY + BY_CLIENT_ID);
+                stmt.setInt(1, clientID);
+            }
+            else if (city != null) {
+                stmt = conn.prepareStatement(FIND_ALL_QUERY + BY_CITY);
+                stmt.setString(1, city);
+            }
+            else if (serviceName != null) {
+                stmt = conn.prepareStatement(FIND_ALL_QUERY + BY_SERVICE_NAME);
+                stmt.setString(1, serviceName);
+            }
+            else stmt = conn.prepareStatement(FIND_ALL_QUERY);
 
             ResultSet rs = stmt.executeQuery();
 

@@ -8,10 +8,96 @@
 <f:view>
     <h:head>
         <title>Admin panel</title>
+        <head>
+            <style type="text/css">
+                .center {
+                    display: flex;
+                    justify-content: center;
+                }
+            </style>
+        </head>
     </h:head>
 
     <h:body style="position: absolute; margin-left: auto; margin-right: auto; left: 0; right: 0; text-align: center;">
-        <h:outputLabel value="Welcome, #{adminPanel.login} [ #{adminPanel.role} ]" />
+        <h:form>
+            <h:outputLabel value="Welcome, #{adminPanel.login} [#{adminPanel.role}]" /><br/>
+            <h:outputLabel value="Do you want log off from your account? Press the button " />
+            <h:commandButton action = "#{logOutBean.logOut}" value = "Log Out"/>
+        </h:form> <br/>
+        <h:outputLabel value="There you can find information about clients!" /> <br/>
+        <h:outputLabel value="You can only browse it, but can not edit." /> <br/><br/>
+
+        <b>Services information</b> <br/>
+
+        <div class="center">
+            <div class="wrapper">
+                <h:form style="margin-left: auto">
+                    <h:dataTable value="#{selectServiceBean.serviceTable}" var="table"
+                                 border="2" cellspacing="1" cellpadding="1" >
+                        <h:column>
+                            <f:facet name="header">ID</f:facet>
+                            <h:outputText value="#{table.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Service name</f:facet>
+                            <h:outputText value="#{table.servicename}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Amount</f:facet>
+                            <h:outputText value="#{table.amount}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Worth</f:facet>
+                            <h:outputText value="#{table.worth}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+            </div>
+        </div> <br/>
+
+        <b>Service update</b><br/>
+        <h:outputText value = "Enter services ID and updated data below!"/><br/>
+
+        <h:form >
+            <h:outputLabel> ID: </h:outputLabel>
+            <h:inputText value="#{updateServiceBean.id}"/>
+            <h:outputLabel> Service name: </h:outputLabel>
+            <h:inputText value="#{updateServiceBean.servicename}"/>
+            <h:outputLabel> Amount: </h:outputLabel>
+            <h:inputText value="#{updateServiceBean.amount}"/>
+            <h:outputLabel> Worth: </h:outputLabel>
+            <h:inputText value="#{updateServiceBean.worth}"/>
+
+            <h:commandButton action = "#{updateServiceBean.update}"
+                             value = "Update Item"/>
+        </h:form> <br/>
+
+        <b>Service insert</b><br/>
+        <h:outputText value = "Enter services data and add it!"/><br/>
+
+        <h:form >
+            <h:outputLabel> Service name: </h:outputLabel>
+            <h:inputText value="#{insertServiceBean.servicename}"/>
+            <h:outputLabel> Amount: </h:outputLabel>
+            <h:inputText value="#{insertServiceBean.amount}"/>
+            <h:outputLabel> Worth: </h:outputLabel>
+            <h:inputText value="#{insertServiceBean.worth}"/>
+
+            <h:commandButton action = "#{insertServiceBean.insert}"
+                             value = "Add Item"/>
+        </h:form> <br/>
+
+        <b>Service delete</b><br/>
+        <h:outputText value = "Enter services ID to delete it"/><br/>
+
+        <h:form >
+            <h:outputLabel> Service ID: </h:outputLabel>
+            <h:inputText value="#{deleteServiceBean.id}"/>
+
+            <h:commandButton action = "#{deleteServiceBean.delete}"
+                             value = "Delete Item"/>
+        </h:form>
+
     </h:body>
 </f:view>
 </html>

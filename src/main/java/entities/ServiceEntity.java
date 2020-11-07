@@ -1,16 +1,25 @@
 package entities;
 
 public class ServiceEntity {
+    private int id;
     private String servicename;
     private String amount;
     private String worth;
-
-    public ServiceEntity() {}
 
     public ServiceEntity(String servicename, String amount, String worth) {
         this.servicename = servicename;
         this.amount = amount;
         this.worth = worth;
+    }
+
+    public ServiceEntity() {}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getServicename() {

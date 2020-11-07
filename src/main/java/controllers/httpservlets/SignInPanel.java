@@ -1,7 +1,6 @@
 package controllers.httpservlets;
 
-import entities.UserEntity;
-import models.Registration;
+import models.utils.Registration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,13 +28,13 @@ public class SignInPanel extends HttpServlet {
                 String role = reg.userSignIn(login, password);
 
                 if (!role.equals("")) {
+                    HttpSession session = req.getSession();
+                    session.setMaxInactiveInterval(1200);
+
                     Cookie cookieRole = new Cookie("role", role);
                     cookieRole.setMaxAge(3600);
                     Cookie loginRole = new Cookie("login", login);
                     loginRole.setMaxAge(3600);
-
-                    HttpSession session = req.getSession();
-                    session.setMaxInactiveInterval(1200);
 
                     session.setAttribute("role", cookieRole);
                     session.setAttribute("login", loginRole);

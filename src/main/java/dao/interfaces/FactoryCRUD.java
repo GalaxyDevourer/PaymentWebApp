@@ -8,5 +8,5 @@ public interface FactoryCRUD<T>{
     List<T> getAll ();
     boolean update (T obj);
     boolean insert (T ojb);
-    boolean delete (T obj);
+    boolean delete (Integer id);
 }

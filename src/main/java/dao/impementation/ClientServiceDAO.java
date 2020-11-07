@@ -56,7 +56,7 @@ public class ClientServiceDAO implements CustomConnection, FactoryCRUD<ClientSer
 
     @Override
     @Deprecated
-    public boolean delete(ClientServiceEntity clientservice) {
+    public boolean delete(Integer id) {
         return false;
     }
 

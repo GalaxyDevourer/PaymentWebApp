@@ -122,14 +122,14 @@ public class ClientDAO implements CustomConnection, FactoryCRUD<ClientEntity> {
     }
 
     @Override
-    public boolean delete(ClientEntity client) {
+    public boolean delete(Integer id) {
         Connection conn = null;
         PreparedStatement stmt = null;
 
         try {
             conn = getConnection();
             stmt = conn.prepareStatement(DELETE_QUERY);
-            stmt.setInt(1, client.getId());
+            stmt.setInt(1, id);
 
             stmt.executeUpdate();
 

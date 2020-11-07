@@ -55,8 +55,7 @@ public class PaymentDAO implements CustomConnection, FactoryCRUD<PaymentEntity> 
 
     @Override
     @Deprecated
-    public boolean delete(PaymentEntity payment) {
-
+    public boolean delete(Integer id) {
         return false;
     }
 }

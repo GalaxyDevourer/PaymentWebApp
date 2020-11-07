@@ -1,8 +1,7 @@
 package controllers.facesservlets;
 
-import models.CookieHelper;
+import models.utils.CookieHelper;
 
-import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;

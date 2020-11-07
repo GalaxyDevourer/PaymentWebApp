@@ -1,6 +1,6 @@
 package controllers.httpservlets;
 
-import models.Registration;
+import models.utils.Registration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
